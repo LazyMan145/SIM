@@ -42,13 +42,12 @@ def creating_file(description, CheckBox5, CheckBox1, CheckBox3, status, priority
                 rf2[Y] = qustion.format('YYYY-MM-DDTHH:mm:ssZZ')
 
             else:
-
-                utc = arrow.utcnow()
-
-                MSKtimezone = utc.to('Europe/Moscow')
-                rf2[Y] = MSKtimezone.format('YYYY-MM-DDTHH:mm:ssZZ')
+                Exception
         else: 
-            rf2[Y] = ''
+            utc = arrow.utcnow()
+
+            MSKtimezone = utc.to('Europe/Moscow')
+            rf2[Y] = MSKtimezone.format('YYYY-MM-DDTHH:mm:ssZZ')
 
         Y += 1
 
