@@ -1,9 +1,5 @@
-import ctypes
 import random
 import tkinter
-from datetime import datetime
-import lxml.etree
-import os
 import customtkinter as CTk
 import pyperclip as pyperclip
 from package.Creatin_file import creating_file
