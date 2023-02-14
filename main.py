@@ -595,6 +595,12 @@ def copy_button(*context):
     print(context)
     pyperclip.copy(" ".join([str(i) for i in context]))
 
+
+ #ПОДАРОК ЧТОБЫ РАДОВАТЬ ТАТАРОК ☺☻♥
+
+
+    #test
+
     # Бригады
 
     # Мои работы
