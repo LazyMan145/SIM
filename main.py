@@ -3,7 +3,7 @@ import tkinter
 import customtkinter as CTk
 import pyperclip as pyperclip
 from package.Creatin_file import creating_file
-
+#lj,fdb=fdkngfvieaslkrngio
 CTk.set_appearance_mode("dark")
 CTk.set_default_color_theme("blue")
 
