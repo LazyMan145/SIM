@@ -12,8 +12,11 @@ class klass_of_worck(CTk.CTkToplevel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.geometry("800x600")
+        self.resizable(False, False)
+        self.minsize(width=1200, height=900)
         self.title("Классификатор работы")
-        self.minsize(300, 200)
+        screen_width = self.winfo_reqheight()
+        screen_height = self.winfo_reqwidth()
 
         tab_objects = {
             "Tab 1": str("Вкладка 1"),
@@ -60,7 +63,9 @@ class klass_of_worck(CTk.CTkToplevel):
                                               text=f"{12} entries returned - {12} entries matched")
         self.record_list_title.grid(row=15, column=2)
 
-        self.record_list_refresh_button = CTk.CTkButton(self.record_list_title_frame, text="Refresh")
+        self.record_list_refresh_button = CTk.CTkButton(self.record_list_title_frame,
+                                                        text="Refresh",
+                                                        command=lambda: print(screen_width, screen_height))
         self.record_list_refresh_button.grid(row=18, column=0)
 
         self.record_list = CTk.CTkScrollableFrame(self.record_list_title_frame,
@@ -161,7 +166,8 @@ class App(CTk.CTk):
         window_height = 720
         self.geometry(f"{window_weight}x{window_height}")
         self.title("SIM")
-        self.minsize(300, 200)
+        self.resizable(False, False)
+        self.minsize(width=1200, height=700)
 
         # создание сетки 4х4
 
@@ -231,13 +237,11 @@ class App(CTk.CTk):
                                                               label_text="Заведение работы",
                                                               width=900,
                                                               height=600)
-        scrollable_frame_Remedy_grid = (0, 1, (10, 0), (10, 0), "nsew", 10)  # TODO в структуру
-        self.scrollable_frame_Remedy.grid(row=scrollable_frame_Remedy_grid[0],
-                                          column=scrollable_frame_Remedy_grid[1],
-                                          padx=scrollable_frame_Remedy_grid[2],
-                                          pady=scrollable_frame_Remedy_grid[3],
-                                          sticky=scrollable_frame_Remedy_grid[4],
-                                          rowspan=scrollable_frame_Remedy_grid[5])
+        self.scrollable_frame_Remedy.grid(row=0,
+                                          column=1,
+                                          padx=(10, 10),
+                                          pady=(10, 10),
+                                          sticky="nsew")
 
         self.scrollable_frame_Remedy.grid_columnconfigure(0, weight=1)
 
@@ -325,9 +329,13 @@ class App(CTk.CTk):
         label = CTk.CTkLabel(master=self.scrollable_frame_Remedy, text="Тип работы")
         label.grid(row=3, column=0, padx=otstupi, pady=(0, 0), ipadx=otstupi)
         type_of_work = CTk.CTkOptionMenu(self.scrollable_frame_Remedy, dynamic_resizing=False, values=[
-            "Ремонт",
-            "Аудит",
-            "Ремонт+Аудит"
+
+            "Планово - профилактическая",
+            "Аварийно - восстановительная",
+            "Планово - профилактическая",
+            "Поручение",
+            "Ремонтно - восстановительная",
+            "(очистить)"
         ])
         type_of_work.grid(row=3, column=1, padx=(otstupi, otstupi), pady=(10, 0), ipadx=(otstupi))
 
@@ -363,9 +371,15 @@ class App(CTk.CTk):
         label = CTk.CTkLabel(master=self.scrollable_frame_Remedy, text="Статус")
         label.grid(row=5, column=0, padx=otstupi, pady=(0, 0), ipadx=otstupi)
         status = CTk.CTkOptionMenu(self.scrollable_frame_Remedy, dynamic_resizing=False, values=[
-            "Заведена",
-            "Решёна",
-            "Назначена"
+            "Зарегистрирована",
+            "Назначена",
+            "Принята",
+            "Отложена",
+            "В работе",
+            "Выполнена",
+            "Закрыта",
+            "Отменена",
+            "(очистить)"
         ])
         status.grid(row=5, column=1, padx=(otstupi, otstupi), pady=(10, 0), ipadx=(otstupi))
 
@@ -375,8 +389,14 @@ class App(CTk.CTk):
         label.grid(row=6, column=0, padx=otstupi, pady=(0, 0), ipadx=otstupi)
         priority = CTk.CTkOptionMenu(self.scrollable_frame_Remedy, dynamic_resizing=False, values=[
             "Высокий",
+            "BC",
             "Средний",
-            "Низкий"
+            "HC",
+            "Низкий",
+            "(очистить)",
+            "Низкий",
+            "(очистить)"
+
         ])
         priority.grid(row=6, column=1, padx=(otstupi, otstupi), pady=(10, 0), ipadx=(otstupi))
 
@@ -422,9 +442,12 @@ class App(CTk.CTk):
         label.grid(row=10, column=0, padx=otstupi, pady=(0, 0), ipadx=otstupi)
 
         service = CTk.CTkOptionMenu(self.scrollable_frame_Remedy, dynamic_resizing=False, values=[
-            "Полное",
-            "Частичное",
-            "Без влияния"
+            "Полное отсутствие сервиса абонентам в зоне действия СЭ",
+            "Нет влияния на сервис абонентам в зоне действия СЭ.",
+            "Значительное влияние на сервис абонентам в зоне действия СЭ.",
+            "Незначительное/кратковременное влияние на сервис абонентам в зоне действия СЭ.",
+            "ВОЗМОЖНО кратковременное прерывание сервиса абонентам в зоне действия СЭ.",
+            "(очистить)"
         ])
         service.grid(row=10, column=1, padx=(otstupi, otstupi), pady=(10, 0), ipadx=(otstupi))
 
@@ -434,9 +457,21 @@ class App(CTk.CTk):
         label.grid(row=11, column=0, padx=otstupi, pady=(0, 0), ipadx=otstupi)
 
         influence = CTk.CTkOptionMenu(self.scrollable_frame_Remedy, dynamic_resizing=False, values=[
+            "Все сервисы",
+            "Голос",
+            "Данные",
+            "Данные + Голос",
+            "Данные + Телевидение",
+            "Дополнительные сервисы",
             "Нет",
-            "Сервис 1",
-            "Сервис 2"
+            "Сервисы ОТ",
+            "Телевидение",
+            "Телевидение + Голос",
+            "Технологические сервисы",
+            "Технологические сервисы с повышенной срочностью",
+            "(очистить)"
+
+
         ])
         influence.grid(row=11, column=1, padx=(otstupi, otstupi), pady=(10, 0), ipadx=(otstupi))
 
@@ -447,9 +482,10 @@ class App(CTk.CTk):
         label.grid(row=12, column=0, padx=otstupi, pady=(0, 0), ipadx=otstupi)
 
         closing_code = CTk.CTkOptionMenu(self.scrollable_frame_Remedy, dynamic_resizing=False, values=[
-            "5y56y5yh45",
-            "5gg45g54gt1",
-            "45g45g4erg54g4w"
+            "Выполнена неуспешно",
+            "Выполнена успешно",
+            "Отменена",
+            "(очистить)"
         ])
         closing_code.grid(row=12, column=1, padx=(otstupi, otstupi), pady=(10, 0), ipadx=(otstupi))
 
@@ -595,13 +631,15 @@ def copy_button(*context):
     print(context)
     pyperclip.copy(" ".join([str(i) for i in context]))
 
+    # Сделать масштабируемость окна
+    # Закончить выравнивание полей
+    # добавить закладки
+    # изменить / отменить
+    # выбор обязательных полей
+    # при определенном типе работ добавить третий столбец с кнопкой "выбор бс"
+    # для полей тип работ(классификатор), площадка, инициатор, контролирующий, исполнитель
 
- #ПОДАРОК ЧТОБЫ РАДОВАТЬ ТАТАРОК ☺☻♥
-
-
-    #test
-
-    # Бригады
+     # Бригады
 
     # Мои работы
 
